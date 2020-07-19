@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Dota2Api.Models.GameList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<script src="~/js/time.js"></script>
+@*<script src="~/js/leagues.js"></script>*@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    #elem:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 42px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 5px;
+        transition: all 1s ease;
+    }
+
+    #elem:hover:before {
+        width: 100%;
+    }
+</style>
+<div class="card" style="margin-bottom:5%; background-color:#18293d !important">
+    <div class="card-header" style="color:red;">
+        <ul class="nav justify-content-center py-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="#!">Live matches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!">Results</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <blockquote class="">
+            @foreach (var a in Model)
+            {
+                <a href="~/Matches/Index/@a.match_id">
+                    <script src="~/js/site.js" asp-append-version="true"></script>
+                    <div class="card">
+                        <div id="elem" class="card-header" style="background-color:#223647; color:red;">
+                            Live•
+                            <script type='text/javascript'>
+                            document.write(timeConverter(@a.activate_time));
+                            </script>
+                            @*<div class="leag" style="float:right;">
+                                    <script type='text/javascript'>
+                                        document.write(League(@a.league_id));
+                                    </script>
+                                </div>*@
+                        </div>
+                        <div class="card-body" style="background-color:#2a3c4f">
+                            <blockquote class="">
+                                <div class="row" style="margin-top:2%; color:white;">
+                                    <div class="col-sm-4">
+                                        <div class="card border-0" style="background-color:#2a3c4f">
+                                            <div class="card-body">
+                                                <div class="logo" style="text-align:center;">
+                                                    <img src="@a.red_url_logo" style="height:65px; width:110px;" />
+                                                </div>
+                                                <h5 class="card-title" style="text-align:center;">@a.team_name_radiant</h5>
+                                                <h4 class="card-text" style="text-align: center; color:white">@a.radiant_score</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card border-0" style="background-color:#2a3c4f">
+                                            <div class="card-body" style="text-align:center;">
+                                                <script type='text/javascript'>
+                                                document.write(TimeCounter(@a.game_time));
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-4">
+                                        <div class="card border-0" style="background-color:#2a3c4f">
+                                            <div class="card-body">
+                                                <div class="logo" style="text-align:center;">
+                                                    <img src="@a.dir_url_logo" style="height: 65px; width: 110px;" />
+                                                </div>
+                                                <h5 class="card-title" style="text-align:center;">@a.team_name_dire</h5>
+                                                <h4 class="card-text" style="text-align:center; color:white">@a.dire_score</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <hr />
+                </a>
+            }
+        </blockquote>
+    </div>
+</div>

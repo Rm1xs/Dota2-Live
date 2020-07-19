@@ -1,0 +1,302 @@
+﻿@model IEnumerable<Dota2Api.Models.Game>
+
+@{
+    ViewData["Title"] = "Index";
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/js/heroimage.js"></script>
+    <script src="~/js/heroitem.js"></script>
+    <script src="~/js/Update.js"></script>
+}
+
+<div class="card-body" id="DynamicContent">
+    <blockquote class="">
+        @foreach (var a in Model)
+        {
+            <script type='text/javascript'>
+                upd1(@a.match_id);
+            </script>
+            <div class="card">
+                <div id="elem" class="card-header" style="background-color:#223647; color:red;">
+                    Live•
+                    @*<div class="leag" style="float:right;">
+                        <script type='text/javascript'>
+                            document.write(League(@a.league_id));
+                        </script>
+                    </div>*@
+                </div>
+                <div class="card-body" style="background-color:#2a3c4f">
+                    <blockquote class=""></blockquote>
+                    <div class="row" style="margin-top:2%; color:white;">
+                        <div class="col-sm-5">
+                            <div class="card border-0" style="background-color:#2a3c4f">
+                                <div class="card-body">
+                                    <div class="logo" style="text-align:center;">
+                                        @*<img src="" style="height:65px; width:110px;" />*@
+                                    </div>
+                                    @foreach (var t in Model)
+                                    {
+                                        <h5 class="card-title" style="text-align:center;">@t.radiant_team.team_name</h5>
+                                        <h4 class="card-text" style="text-align: center; color:white">@t.scoreboard.radiant.score</h4>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="card border-0" style="background-color:#2a3c4f">
+                                <div class="card-body" style="text-align:center;">
+                                    @foreach (var t in Model)
+                                    {
+                                        @foreach (var c in t.lead)
+                                        {
+                                            if (c.lobid == t.lobby_id)
+                                            {
+                                                if (c.id == 1)
+                                                {
+                                                    <h5 class="card-title" style="text-align:center;">@t.radiant_team.team_name</h5>
+                                                    <img src="~/img/networth.png" />
+                                                    <h4 id="led" class="card-text" style="text-align: center; color:white">@c.lead</h4>
+                                                }
+                                                else if (c.id == 2)
+                                                {
+                                                    <h5 class="card-title" style="text-align:center;">@t.dire_team.team_name</h5>
+                                                    <img src="~/img/networth.png" />
+                                                    <h4 id="led" class="card-text" style="text-align: center; color:white">@c.lead</h4>
+                                                }
+                                            }
+                                        }
+                                        @*<h4 class="card-text" style="text-align: center; color:white">@t.radiant_series_wins</h4>*@
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-5">
+                            <div class="card border-0" style="background-color:#2a3c4f">
+                                <div class="card-body">
+                                    <div class="logo" style="text-align:center;">
+                                        @*<img src="" style="height: 65px; width: 110px;" />*@
+                                    </div>
+                                    @foreach (var t in Model)
+                                    {
+                                        <h5 class="card-title" style="text-align:center;">@t.dire_team.team_name</h5>
+                                        <h4 class="card-text" style="text-align: center; color:white">@t.scoreboard.dire.score</h4>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    </blockquote>
+    <blockquote>
+        <div class="card" style="background-color:#223647;">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div id="x" style="float:left; margin-right:0.1%;"></div>
+                        </div>
+                        <div class="col">
+                            <div id="y" style="float:right; margin-right:0.1%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </blockquote>
+    <div class="card" style="background-color:#223647;">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table" style="color:black;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Hero</th>
+                                    <th scope="col">Levl</th>
+                                    <th scope="col">KDA</th>
+                                    <th scope="col">Gold</th>
+                                    <th scope="col">LH/DN</th>
+                                    <th scope="col">GPM/XPM</th>
+                                    <th scope="col">NW</th>
+                                    <th scope="col">Items</th>
+                                    <th scope="col">Team</th>
+                                </tr>
+                            </thead>
+                            <tbody style="color:white;">
+                                @foreach (var t in Model)
+                                {
+
+                                    @foreach (var a in t.players)
+                                    {
+                                        @if (a.hero_id != 0)
+                                        {
+                                            <tr>
+                                                @if (a.team == 0)
+                                                {
+                                                    <td style="color:green;">@a.name</td>
+
+                                                }
+                                                else if (a.team == 1)
+                                                {
+                                                    <td style="color:red;">@a.name</td>
+                                                }
+                                                <td id="@a.hero_id"></td>
+                                                @foreach (var j in t.scoreboard.radiant.players)
+                                                {
+                                                    if (j.account_id == a.account_id)
+                                                    {
+                                                        <td>@j.level</td>
+                                                        <td>@j.kills / @j.assists / @j.death</td>
+                                                        <td>@j.gold</td>
+                                                        <td>@j.last_hits / @j.denies</td>
+                                                        <td>@j.gold_per_min / @j.xp_per_min</td>
+                                                        <td>@j.net_worth</td>
+                                                        <td id="@j.account_id"></td>
+                                                    }
+                                                }
+                                                @foreach (var j in t.scoreboard.dire.players)
+                                                {
+                                                    if (j.account_id == a.account_id)
+                                                    {
+                                                        <td>@j.level</td>
+                                                        <td>@j.kills / @j.assists / @j.death</td>
+                                                        <td>@j.gold</td>
+                                                        <td>@j.last_hits / @j.denies</td>
+                                                        <td>@j.gold_per_min / @j.xp_per_min</td>
+                                                        <td>@j.net_worth</td>
+                                                        <td id="@j.account_id"></td>
+                                                    }
+                                                }
+                                                @if (@a.team == 0)
+                                                {
+                                                    <td>@t.radiant_team.team_name</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@t.dire_team.team_name</td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@foreach (var a in Model)
+{
+
+    foreach (var b in a.players)
+    {
+        if (b.team == 0)
+        {
+            <script type='text/javascript'>
+                GetImg(@b.hero_id, "x");
+            </script>
+        }
+        else if (b.team == 1)
+        {
+            <script type='text/javascript'>
+                GetImg(@b.hero_id, "y");
+            </script>
+        }
+    }
+}
+
+@foreach (var a in Model)
+{
+    foreach (var t in a.scoreboard.radiant.players)
+    {
+        if (t.item0 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item0, "@t.account_id");
+            </script>
+        }
+        if (t.item1 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item1, "@t.account_id");
+            </script>
+        }
+        if (t.item2 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item2, "@t.account_id");
+            </script>
+        }
+        if (t.item3 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item3, "@t.account_id");
+            </script>
+        }
+        if (t.item4 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item4, "@t.account_id");
+            </script>
+        }
+        if (t.item5 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item5, "@t.account_id");
+            </script>
+        }
+    }
+
+    foreach (var t in a.scoreboard.dire.players)
+    {
+        if (t.item0 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item0, "@t.account_id");
+            </script>
+        }
+        if (t.item1 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item1, "@t.account_id");
+            </script>
+        }
+        else if (t.item2 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item2, "@t.account_id");
+            </script>
+        }
+        if (t.item3 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item3, "@t.account_id");
+            </script>
+        }
+        if (t.item4 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item4, "@t.account_id");
+            </script>
+        }
+        if (t.item5 != 0)
+        {
+            <script type='text/javascript'>
+                GetHeroItem(@t.item5, "@t.account_id");
+            </script>
+        }
+    }
+}
+
