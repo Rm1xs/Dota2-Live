@@ -1,11 +1,12 @@
-﻿@model IEnumerable<Dota2Api.Models.Game>
-
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<Dota2Api.Models.Game>
 @{
     ViewData["Title"] = "Index";
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/js/heroimage.js"></script>
     <script src="~/js/heroitem.js"></script>
-    <script src="~/js/Update.js"></script>
 }
 
 <div class="card-body" id="DynamicContent" style="margin-bottom:6%;">
@@ -19,10 +20,10 @@
                 <div id="elem" class="card-header" style="background-color:#223647; color:red;">
                     Live•
                     @*<div class="leag" style="float:right;">
-                        <script type='text/javascript'>
-                            document.write(League(@a.league_id));
-                        </script>
-                    </div>*@
+                            <script type='text/javascript'>
+                                document.write(League(@a.league_id));
+                            </script>
+                        </div>*@
                 </div>
                 <div class="card-body" style="background-color:#2a3c4f">
                     <blockquote class=""></blockquote>
@@ -38,6 +39,7 @@
                                         <h5 class="card-title" style="text-align:center;">@t.radiant_team.team_name</h5>
                                         <h4 class="card-text" style="text-align: center; color:white">@t.scoreboard.radiant.score</h4>
                                     }
+
                                 </div>
                             </div>
                         </div>
@@ -298,4 +300,3 @@
         }
     }
 }
-

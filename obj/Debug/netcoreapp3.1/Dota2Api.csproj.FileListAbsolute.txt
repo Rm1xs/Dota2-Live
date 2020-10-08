@@ -113,3 +113,4 @@ C:\Users\neket\Desktop\Dota2Api\Dota2Api\bin\Debug\netcoreapp3.1\Nancy.dll
 C:\Users\neket\Desktop\Dota2Api\Dota2Api\obj\Debug\netcoreapp3.1\Dota2Api.csproj.CoreCompileInputs.cache
 C:\Users\neket\Desktop\Dota2Api\Dota2Api\obj\Debug\netcoreapp3.1\Dota2Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\neket\Desktop\Dota2Api\Dota2Api\obj\Debug\netcoreapp3.1\Razor\Views\Matches\Index.cshtml.g.cs
+C:\Users\neket\Desktop\Dota2Api\Dota2Api\obj\Debug\netcoreapp3.1\Razor\Views\Matches\UpdatePage.cshtml.g.cs

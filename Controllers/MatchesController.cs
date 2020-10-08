@@ -68,6 +68,30 @@ namespace Dota2Api.Controllers
             return View(games);
         }
 
+        public IActionResult UpdatePage(long id)
+        {
+            const string url = "https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v1/?key=A936A9076BEB4894258B4CB51EFC4A58&partner=1";
+            HttpClient client = new HttpClient();
+            Encoding.GetEncoding("ISO-8859-1");
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+            var data = client.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
+            List<MatchLiveInfo> locations = new List<MatchLiveInfo> { JsonConvert.DeserializeObject<MatchLiveInfo>(data) };
+            List<Game> games = new List<Game>();
+            GetLead();
+            foreach (var a in locations)
+            {
+                foreach (var b in a.result.games)
+                {
+                    if (b.match_id == id)
+                    {
+                        games.Add(new Game { dire_team = b.dire_team, match_id = b.match_id, players = b.players, radiant_team = b.radiant_team, scoreboard = b.scoreboard, lead = live, lobby_id = b.lobby_id });
+                    }
+                }
+            }
+            //games.OrderByDescending(f => f.scoreboard.dire.players);
+            return View(games);
+        }
+
         public string GetImageChar(int id)
         {
 
@@ -114,5 +138,7 @@ namespace Dota2Api.Controllers
             }
             return result;
         }
+
+
     }
 }
